@@ -6,7 +6,7 @@ batch_size: 120
 seed: 43
 debugrun: false
 wandb_cfg:
-  project: faive
+  project: multiColor
   run_name: ${now:%Y%m%d-%H%M%S}_${.project}
   tags: ["test", "act", 'updated_config']
   mode: "online"
@@ -18,7 +18,7 @@ pipeline:
 dataset_cfg:
   data:
     _target_: srl_il.dataset.faive_dataset.faive_train_val_test
-    data_directory: Data/srl/cube_relocation_processed
+    data_directory: /home/ubuntu/Data/processed_data/
     test_fraction: 0.1
     val_fraction: 0.1
     window_size_train: 20
@@ -125,7 +125,15 @@ algo_cfg:
           pretrained: true
         posemb_cfg:
           type: none
-          
+      oakd_wrist_view_images:
+        datakeys: ['oakd_wrist_view_images']
+        encoder_cfg:
+          type:  crop_resnet18
+          resize_shape: [224, 224]
+          crop_shape: null
+          pretrained: true
+        posemb_cfg:
+          type: none     
     group_emb_cfg:
       type: "whole_seq_sine" # none, whole_seq_sine, each_group_learned, whole_seq_learned
 
