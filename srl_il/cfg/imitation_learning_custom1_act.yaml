@@ -11,6 +11,7 @@ wandb_cfg:
   tags: ["test", "act"]
   mode: "online"
 output_dir: runs/${wandb_cfg.run_name}
+resume_path: /home/ubuntu/git/srl_il/runs/20241210-230437_multiColor/checkpoints/checkpoint_320.pth
 
 pipeline:
   _target_: srl_il.pipeline.imitation_learning.ImitationLearningPipeline
@@ -84,13 +85,13 @@ algo_cfg:
     optimizer_cfg:
       act_encoder:
         optm_cls: torch.optim.Adam
-        lr: 0.0001 # start learning rate (I think)
+        lr: 0.00004 # start learning rate (I think)
       act_decoder:
         optm_cls: torch.optim.Adam
-        lr: 0.0001
+        lr: 0.00009
       obs_encoder:
         optm_cls: torch.optim.Adam
-        lr: 0.0001
+        lr: 0.00009
       projs:
         optm_cls: torch.optim.Adam
         lr: 0.0001
@@ -179,14 +180,14 @@ training_cfg:
   num_epochs: 1000
   num_steps_per_epoch: 100
   num_eval_steps_per_epoch: 10
-  steps_saving: 40
+  steps_saving: 20
   rollout:
     enabled: false
 
   visualization:
     enabled: false
     num_samples: 5
-    every_n_epoch: 10
+    every_n_epoch: 50
 
 
 

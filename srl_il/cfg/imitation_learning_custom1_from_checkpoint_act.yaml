@@ -11,6 +11,7 @@ wandb_cfg:
   tags: ["test", "act"]
   mode: "online"
 output_dir: runs/${wandb_cfg.run_name}
+# resume_path: /home/ubuntu/git/srl_il/runs/20241210-230437_multiColor/checkpoints/checkpoint_320.pth
 
 pipeline:
   _target_: srl_il.pipeline.imitation_learning.ImitationLearningPipeline
@@ -110,9 +111,9 @@ algo_cfg:
       oakd_front_view_images:
         datakeys: ['oakd_front_view_images']
         encoder_cfg:
-          type: crop_resnet18
-          resize_shape: [270, 480]
-          crop_shape: [224, 352]
+          type:  crop_resnet18
+          resize_shape: [224, 224]
+          crop_shape: null
           pretrained: true
         posemb_cfg:
           type: none
@@ -120,8 +121,8 @@ algo_cfg:
         datakeys: ['oakd_side_view_images']
         encoder_cfg:
           type:  crop_resnet18
-          resize_shape: [270, 480]
-          crop_shape: [224, 352]
+          resize_shape: [224, 224]
+          crop_shape: null
           pretrained: true
         posemb_cfg:
           type: none
@@ -129,8 +130,8 @@ algo_cfg:
         datakeys: ['oakd_wrist_view_images']
         encoder_cfg:
           type:  crop_resnet18
-          resize_shape: [270, 480]
-          crop_shape: [224, 352]
+          resize_shape: [224, 224]
+          crop_shape: null
           pretrained: true
         posemb_cfg:
           type: none
@@ -154,25 +155,25 @@ algo_cfg:
 
 lr_scheduler_cfg:
   act_encoder:
-    type: torch
-    scheduler_cls: torch.optim.lr_scheduler.StepLR
+    type: "diffusers"
+    name: cosine
     params:
-      step_size: 1000
-      gamma: 0.95
+      num_warmup_steps: 400
+      num_training_steps: 800000 # number per epoch * num_epochs
     step_with_metrics: false
   act_decoder:
-    type: torch
-    scheduler_cls: torch.optim.lr_scheduler.StepLR
+    type: "diffusers"
+    name: cosine
     params:
-      step_size: 10000
-      gamma: 0.95
+      num_warmup_steps: 400
+      num_training_steps: 800000 # number per epoch * num_epochs
     step_with_metrics: false
   obs_encoder:
-    type: torch
-    scheduler_cls: torch.optim.lr_scheduler.StepLR
+    type: "diffusers"
+    name: cosine
     params:
-      step_size: 10000
-      gamma: 0.95
+      num_warmup_steps: 2000
+      num_training_steps: 800000 # number per epoch * num_epochs
     step_with_metrics: false
 
 training_cfg:
