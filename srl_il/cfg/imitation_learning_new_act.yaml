@@ -21,8 +21,8 @@ dataset_cfg:
     data_directory: /home/ubuntu/Data/processed_data/
     test_fraction: 0.1
     val_fraction: 0.1
-    window_size_train: 20
-    window_size_test: 20
+    window_size_train: 15
+    window_size_test: 15
     keys_traj:  [
               ['actions_franka', 'actions_franka', 0, null],  # use the first frame as the observation
               ['actions_hand', 'actions_hand', 0, null],  # use the first frame as the observation
@@ -58,7 +58,7 @@ algo_cfg:
       actions_franka: 7
       actions_hand: 17
     z_dim: 32
-    T_target: 20
+    T_target: 15
     T_z: 1
     encoder_is_causal: false
     decoder_is_causal: true
