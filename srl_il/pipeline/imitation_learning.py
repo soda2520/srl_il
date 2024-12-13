@@ -188,7 +188,7 @@ class ImitationLearningPipeline(Pipeline, AlgoMixin, DatasetMixin, Lr_SchedulerM
                 save_checkpoint = True
 
             if update_best_model:
-                self.save_model(os.path.join(self.output_dir, "checkpoints", "best_model.pth"))
+                self.save_checkpoint(os.path.join(self.output_dir, "checkpoints", "best_model.pth"))
                 print(f"Best model saved in {self.output_dir}.\n")
             if save_checkpoint:
                 self.save_checkpoint(os.path.join(self.output_dir, "checkpoints", f"checkpoint_{epoch}.pth"))
