@@ -16,6 +16,14 @@ class LowdimConcat(nn.Module):
         self.linear = nn.Linear(input_dim, output_dim)
         self.datakeys = datakeys
     def forward(self, *args):
+
+
+                # Ensure all tensors have the same number of dimensions
+        max_dim = max(arg.dim() for arg in args)
+        args = [arg.unsqueeze(-1) if arg.dim() < max_dim else arg for arg in args]
+        # for i, arg in enumerate(args):
+        #     print(f"Shape of tensor {i}: {arg.shape}")
+        # C
         x = torch.cat(args, dim=-1)
         return self.linear(x)
 
